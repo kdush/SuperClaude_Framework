@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "language": "zh_CN",
+    "name": "简体中文",
+    "version": "1.0.0",
+    "build_time": "2025-08-08T16:18:14.354105",
+    "total_items": 118,
+    "build_cost": 1e-06,
+    "quality_score": 0.991
+  },
+  "commands": {
+    "document": "为特定组件、功能或特性生成精确、集中的文档。",
+    "spawn": "将复杂请求分解为可管理的子任务并协调其执行。",
+    "estimate": "根据复杂性分析，为任务、功能或项目生成准确的开发估算。",
+    "i18n": "多语言系统管理，支持智能语言切换、角色本地化、翻译验证和10种语言的文化适应性调整。",
+    "implement": "通过智能专家激活和全面的开发支持，实现功能、组件和代码功能。",
+    "troubleshoot": "系统地诊断和解决代码、构建、部署或系统行为中的问题。",
+    "improve": "系统地改进代码质量、性能、可维护性和最佳实践。",
+    "explain": "清晰、全面地解释代码功能、概念或系统行为。",
+    "analyze": "在质量、安全、性能和架构领域执行全面的代码分析。",
+    "workflow": "分析产品需求文档 (PRD) 和功能规范，以生成全面的、分步的实现工作流，并提供专家指导、依赖映射和自动化任务编排。",
+    "load": "加载和分析项目上下文、配置、依赖项和环境设置。",
+    "index": "创建和维护全面的项目文档、索引和知识库。",
+    "build": "构建、编译和打包项目，并提供全面的错误处理和优化。",
+    "git": "执行 Git 操作，并提供智能提交消息、分支管理和工作流优化。",
+    "task": "通过智能工作流管理、跨会话持久性、分层任务组织和高级编排功能执行复杂任务。",
+    "design": "设计系统架构、API、组件接口和技术规范。",
+    "cleanup": "系统地清理代码、删除死代码、优化导入并改进项目结构。",
+    "test": "执行测试、生成全面的测试报告并维护测试覆盖率标准。"
+  },
+  "ui": {
+    "welcome": "欢迎使用 SuperClaude V4",
+    "language_switched": "语言已切换到 {language}",
+    "current_language": "当前语言：{language}",
+    "available_languages": "可用语言"
+  },
+  "errors": {
+    "file_not_found": "文件未找到：{filename}",
+    "invalid_language": "不支持的语言代码：{code}",
+    "switch_failed": "语言切换失败"
+  },
+  "personas": {
+    "architect": {
+      "name": "系统架构师",
+      "description": "专注于系统设计和长远架构决策的专家"
+    },
+    "frontend": {
+      "name": "前端专家",
+      "description": "用户体验专家和可访问性倡导者"
+    },
+    "backend": {
+      "name": "后端工程师", 
+      "description": "可靠性工程师和API专家"
+    },
+    "security": {
+      "name": "安全专家",
+      "description": "威胁建模师和漏洞评估专家"
+    },
+    "qa": {
+      "name": "质量保证",
+      "description": "质量倡导者和测试专家"
+    },
+    "devops": {
+      "name": "运维工程师",
+      "description": "基础设施专家和部署自动化专家"
+    }
+  },
+  "system": {
+    "initializing": "初始化中...",
+    "ready": "系统就绪",
+    "performance": "性能指标",
+    "cache_hit_rate": "缓存命中率",
+    "avg_response_time": "平均响应时间"
+  }
+}

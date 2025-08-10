@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "language": "de_DE",
+    "name": "Deutsch",
+    "version": "1.0.0",
+    "build_time": "2025-08-11T01:30:00.000000",
+    "total_items": 42,
+    "build_cost": 1e-06,
+    "quality_score": 1.0
+  },
+  "commands": {
+    "document": "Präzise, fokussierte Dokumentation für spezifische Komponenten, Funktionen oder Features erstellen.",
+    "spawn": "Komplexe Anfragen in handhabbare Unteraufgaben aufteilen und deren Ausführung koordinieren.",
+    "estimate": "Basierend auf Komplexitätsanalyse genaue Entwicklungsschätzungen für Aufgaben, Features oder Projekte erstellen.",
+    "i18n": "Mehrsprachiges Systemmanagement mit intelligentem Sprachenwechsel, Persona-Lokalisierung, Übersetzungsvalidierung und kultureller Anpassung für 10 Sprachen.",
+    "implement": "Funktionen, Komponenten und Code-Features mit intelligenter Expertenaktivierung und umfassender Entwicklungsunterstützung implementieren.",
+    "troubleshoot": "Probleme in Code, Builds, Deployments oder Systemverhalten systematisch diagnostizieren und lösen.",
+    "improve": "Systematische Verbesserungen an Code-Qualität, Leistung, Wartbarkeit und bewährten Praktiken anwenden.",
+    "explain": "Klare, umfassende Erklärungen für Code-Funktionalität, Konzepte oder Systemverhalten bereitstellen.",
+    "analyze": "Umfassende Code-Analyse in den Bereichen Qualität, Sicherheit, Leistung und Architektur durchführen.",
+    "workflow": "Produktanforderungsdokumente (PRD) und Funktionsspezifikationen analysieren, um umfassende schrittweise Implementierungs-Workflows mit Expertenberatung, Abhängigkeits-Mapping und automatisierter Aufgabenorchestrierung zu generieren.",
+    "load": "Projektkontext, Konfigurationen, Abhängigkeiten und Umgebungseinstellungen laden und analysieren.",
+    "index": "Umfassende Projektdokumentation, Indizes und Wissensdatenbank erstellen und pflegen.",
+    "build": "Projekte mit umfassender Fehlerbehandlung und Optimierung erstellen, kompilieren und verpacken.",
+    "git": "Git-Operationen mit intelligenten Commit-Nachrichten, Branch-Management und Workflow-Optimierung ausführen.",
+    "task": "Komplexe Aufgaben mit intelligentem Workflow-Management, sitzungsübergreifender Persistenz, hierarchischer Aufgabenorganisation und erweiterten Orchestrierungsfähigkeiten ausführen.",
+    "design": "Systemarchitektur, APIs, Komponentenschnittstellen und technische Spezifikationen entwerfen.",
+    "cleanup": "Code systematisch bereinigen, toten Code entfernen, Importe optimieren und Projektstruktur verbessern.",
+    "test": "Tests ausführen, umfassende Testberichte erstellen und Testabdeckungsstandards einhalten."
+  },
+  "ui": {
+    "welcome": "Willkommen bei SuperClaude V4",
+    "language_switched": "Sprache gewechselt zu {language}",
+    "current_language": "Aktuelle Sprache: {language}",
+    "available_languages": "[Deutsch 翻译] 可用语言"
+  },
+  "errors": {
+    "file_not_found": "Datei nicht gefunden: {filename}",
+    "invalid_language": "[Deutsch 翻译] 不支持的语言代码：{code}",
+    "switch_failed": "[Deutsch 翻译] 语言切换失败"
+  },
+  "personas": {
+    "architect": {
+      "name": "Systemarchitekt",
+      "description": "[Deutsch 翻译] 专注于系统设计和长远架构决策的专家"
+    },
+    "frontend": {
+      "name": "[Deutsch 翻译] 前端专家",
+      "description": "[Deutsch 翻译] 用户体验专家和可访问性倡导者"
+    },
+    "backend": {
+      "name": "[Deutsch 翻译] 后端工程师",
+      "description": "[Deutsch 翻译] 可靠性工程师和API专家"
+    },
+    "security": {
+      "name": "[Deutsch 翻译] 安全专家",
+      "description": "[Deutsch 翻译] 威胁建模师和漏洞评估专家"
+    },
+    "qa": {
+      "name": "[Deutsch 翻译] 质量保证",
+      "description": "[Deutsch 翻译] 质量倡导者和测试专家"
+    },
+    "devops": {
+      "name": "[Deutsch 翻译] 运维工程师",
+      "description": "[Deutsch 翻译] 基础设施专家和部署自动化专家"
+    }
+  },
+  "system": {
+    "initializing": "[Deutsch 翻译] 初始化中...",
+    "ready": "[Deutsch 翻译] 系统就绪",
+    "performance": "[Deutsch 翻译] 性能指标",
+    "cache_hit_rate": "[Deutsch 翻译] 缓存命中率",
+    "avg_response_time": "[Deutsch 翻译] 平均响应时间"
+  }
+}

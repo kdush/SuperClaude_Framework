@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "language": "fr_FR",
+    "name": "Français",
+    "version": "1.0.0",
+    "build_time": "2025-08-11T01:30:00.000000",
+    "total_items": 42,
+    "build_cost": 1e-06,
+    "quality_score": 1.0
+  },
+  "commands": {
+    "document": "Générer une documentation précise et ciblée pour des composants, fonctions ou caractéristiques spécifiques.",
+    "spawn": "Diviser les demandes complexes en sous-tâches gérables et coordonner leur exécution.",
+    "estimate": "Générer des estimations de développement précises pour les tâches, fonctions ou projets basées sur l'analyse de complexité.",
+    "i18n": "Gestion du système multilingue avec changement de langue intelligent, localisation des personas, validation des traductions et adaptation culturelle pour 10 langues.",
+    "implement": "Implémenter des fonctions, composants et fonctionnalités de code avec activation intelligente d'experts et support de développement complet.",
+    "troubleshoot": "Diagnostiquer et résoudre systématiquement les problèmes dans le code, les builds, les déploiements ou le comportement du système.",
+    "improve": "Appliquer des améliorations systématiques à la qualité du code, performance, maintenabilité et meilleures pratiques.",
+    "explain": "Fournir des explications claires et complètes sur la fonctionnalité du code, les concepts ou le comportement du système.",
+    "analyze": "Exécuter une analyse de code complète dans les domaines de la qualité, sécurité, performance et architecture.",
+    "workflow": "Analyser les Documents d'Exigences Produit (PRD) et les spécifications fonctionnelles pour générer des workflows d'implémentation complets étape par étape avec guidance experte, cartographie des dépendances et orchestration automatisée des tâches.",
+    "load": "Charger et analyser le contexte du projet, configurations, dépendances et paramètres d'environnement.",
+    "index": "Créer et maintenir une documentation de projet complète, des index et une base de connaissances.",
+    "build": "Construire, compiler et empaqueter des projets avec une gestion d'erreurs complète et une optimisation.",
+    "git": "Exécuter les opérations Git avec des messages de commit intelligents, la gestion des branches et l'optimisation des workflows.",
+    "task": "Exécuter des tâches complexes avec gestion intelligente des workflows, persistance inter-sessions, organisation hiérarchique des tâches et capacités d'orchestration avancées.",
+    "design": "Concevoir l'architecture système, les APIs, les interfaces de composants et les spécifications techniques.",
+    "cleanup": "Nettoyer systématiquement le code, supprimer le code mort, optimiser les imports et améliorer la structure du projet.",
+    "test": "Exécuter les tests, générer des rapports de test complets et maintenir les standards de couverture de test."
+  },
+  "ui": {
+    "welcome": "Bienvenue dans SuperClaude V4",
+    "language_switched": "Langue changée vers {language}",
+    "current_language": "Langue actuelle : {language}",
+    "available_languages": "[Français 翻译] 可用语言"
+  },
+  "errors": {
+    "file_not_found": "Fichier non trouvé : {filename}",
+    "invalid_language": "[Français 翻译] 不支持的语言代码：{code}",
+    "switch_failed": "[Français 翻译] 语言切换失败"
+  },
+  "personas": {
+    "architect": {
+      "name": "Architecte système",
+      "description": "[Français 翻译] 专注于系统设计和长远架构决策的专家"
+    },
+    "frontend": {
+      "name": "[Français 翻译] 前端专家",
+      "description": "[Français 翻译] 用户体验专家和可访问性倡导者"
+    },
+    "backend": {
+      "name": "[Français 翻译] 后端工程师",
+      "description": "[Français 翻译] 可靠性工程师和API专家"
+    },
+    "security": {
+      "name": "[Français 翻译] 安全专家",
+      "description": "[Français 翻译] 威胁建模师和漏洞评估专家"
+    },
+    "qa": {
+      "name": "[Français 翻译] 质量保证",
+      "description": "[Français 翻译] 质量倡导者和测试专家"
+    },
+    "devops": {
+      "name": "[Français 翻译] 运维工程师",
+      "description": "[Français 翻译] 基础设施专家和部署自动化专家"
+    }
+  },
+  "system": {
+    "initializing": "[Français 翻译] 初始化中...",
+    "ready": "[Français 翻译] 系统就绪",
+    "performance": "[Français 翻译] 性能指标",
+    "cache_hit_rate": "[Français 翻译] 缓存命中率",
+    "avg_response_time": "[Français 翻译] 平均响应时间"
+  }
+}
