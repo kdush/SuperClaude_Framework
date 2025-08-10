@@ -135,7 +135,7 @@ class I18nDevTools:
             }
         }
         
-    def detect_changes(self, reference_locale: str = 'zh_CN') -> Dict[str, Any]:
+    def detect_changes(self, reference_locale: str = 'en_US') -> Dict[str, Any]:
         """
         检测locale文件变化
         
@@ -635,7 +635,7 @@ class I18nDevTools:
         print("🚀 生成所有缺失的语言文件...")
         
         # 检测缺失的翻译
-        changes = self.detect_changes('zh_CN')
+        changes = self.detect_changes('en_US')
         
         if 'error' in changes:
             return changes
@@ -647,7 +647,7 @@ class I18nDevTools:
             return {'status': 'no_missing_files'}
         
         # 批量翻译
-        result = self.translate_batch('zh_CN', missing_locales)
+        result = self.translate_batch('en_US', missing_locales)
         
         # 验证结果
         validation = self.validate_translations(missing_locales)
@@ -679,8 +679,8 @@ def main():
     
     # 检测命令
     detect_parser = subparsers.add_parser('detect', help='检测缺失翻译')
-    detect_parser.add_argument('--reference', '-r', default='zh_CN', 
-                              help='参考语言 (default: zh_CN)')
+    detect_parser.add_argument('--reference', '-r', default='en_US', 
+                              help='参考语言 (default: en_US)')
     
     # 翻译命令
     translate_parser = subparsers.add_parser('translate', help='批量翻译')
