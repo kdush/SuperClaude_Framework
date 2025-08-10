@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
+SuperClaude V4 /sc:i18n Command Handler
 SuperClaude V4 /sc:i18n 命令处理器
 
+Integrated unified language switching for Claude Code and SuperClaude i18n system
 集成 Claude Code 和 SuperClaude i18n 系统的统一语言切换
 """
 
@@ -18,13 +20,13 @@ from SuperClaude.claude_code_localizer import ClaudeCodeLocalizer
 
 
 class I18nCommandHandler:
-    """处理 /sc:i18n 命令的统一语言切换"""
+    """Handle unified language switching for /sc:i18n commands / 处理 /sc:i18n 命令的统一语言切换"""
     
     def __init__(self):
         self.localizer = get_localizer()
         self.claude_localizer = ClaudeCodeLocalizer()
         
-        # 语言代码映射
+        # Language code mapping / 语言代码映射
         self.language_aliases = {
             'zh': 'zh_CN',
             'chinese': 'zh_CN',
@@ -32,10 +34,10 @@ class I18nCommandHandler:
             'en': 'en_US', 
             'english': 'en_US',
             'us': 'en_US',
-            'ja': 'ja_JP',  # 添加直接的日语映射
+            'ja': 'ja_JP',  # Add direct Japanese mapping / 添加直接的日语映射
             'jp': 'ja_JP',
             'japanese': 'ja_JP',
-            'ko': 'ko_KR',  # 添加直接的韩语映射
+            'ko': 'ko_KR',  # Add direct Korean mapping / 添加直接的韩语映射
             'kr': 'ko_KR',
             'korean': 'ko_KR',
             'es': 'es_ES',

@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
 """
+SuperClaude V4 Internationalization (i18n) System
 SuperClaude V4 国际化 (i18n) 系统
 
+Features:
 功能特性：
+- Support for 10 language localizations
 - 支持10种语言的本地化
+- YAML configuration-driven architecture
 - YAML配置驱动的架构
+- Intelligent language detection and switching
 - 智能语言检测和切换
+- Cultural adaptation adjustments
 - 文化适应性调整
+- Caching and performance optimization
 - 缓存和性能优化
+- Offline operation support
 - 离线运行支持
 
+Supported Languages:
 支持的语言：
 - en_US: English (US)
 - zh_CN: 简体中文
@@ -33,39 +42,43 @@ import logging
 
 class LocalizationManager:
     """
+    SuperClaude V4 Localization Manager
     SuperClaude V4 本地化管理器
     
+    Provides complete i18n solution with multi-language support, cultural adaptation and performance optimization
     提供多语言支持、文化适应和性能优化的完整i18n解决方案
     """
     
     def __init__(self, locale_dir: Optional[str] = None):
         """
+        Initialize the localization manager
         初始化本地化管理器
         
         Args:
+            locale_dir: Path to localization files directory, defaults to Framework-Hooks/locales
             locale_dir: 本地化文件目录路径，默认为 Framework-Hooks/locales
         """
-        # 确定 locales 目录
+        # Determine locales directory / 确定 locales 目录
         if locale_dir:
             self.locale_dir = Path(locale_dir)
         else:
-            # 默认路径：Framework-Hooks/locales
+            # Default path: Framework-Hooks/locales / 默认路径：Framework-Hooks/locales
             framework_root = Path(__file__).parent.parent
             self.locale_dir = framework_root / "Framework-Hooks" / "locales"
         
-        # 当前语言设置
-        self.current_locale = "zh_CN"  # 默认中文
+        # Current language setting / 当前语言设置
+        self.current_locale = "zh_CN"  # Default Chinese / 默认中文
         
-        # 支持的语言列表
+        # Supported languages list / 支持的语言列表
         self.supported_locales = [
             'en_US', 'zh_CN', 'zh_TW', 'ja_JP', 'ko_KR',
             'ru_RU', 'es_ES', 'de_DE', 'fr_FR', 'ar_SA'
         ]
         
-        # 本地化数据缓存
+        # Localization data cache / 本地化数据缓存
         self._localization_cache = {}
         
-        # 性能指标
+        # Performance metrics / 性能指标
         self._performance_metrics = {
             'cache_hits': 0,
             'cache_misses': 0,
@@ -73,21 +86,21 @@ class LocalizationManager:
             'switch_times': []
         }
         
-        # 配置日志
+        # Configure logging / 配置日志
         self.logger = logging.getLogger(__name__)
         
-        # 初始化
+        # Initialize / 初始化
         self._initialize()
     
     def _initialize(self):
-        """初始化本地化系统"""
+        """Initialize the localization system / 初始化本地化系统"""
         try:
-            # 检查 locales 目录
+            # Check locales directory / 检查 locales 目录
             if not self.locale_dir.exists():
                 self.logger.warning(f"Locales directory not found: {self.locale_dir}")
                 return False
             
-            # 预加载当前语言
+            # Preload current language / 预加载当前语言
             self._load_locale_data(self.current_locale)
             
             self.logger.info(f"LocalizationManager initialized with {self.current_locale}")
@@ -99,12 +112,15 @@ class LocalizationManager:
     
     def _load_locale_data(self, locale_code: str) -> Dict[str, Any]:
         """
+        Load localization data for a specific language
         加载特定语言的本地化数据
         
         Args:
+            locale_code: Language code, e.g. 'zh_CN'
             locale_code: 语言代码，如 'zh_CN'
             
         Returns:
+            Localization data dictionary
             本地化数据字典
         """
         if locale_code in self._localization_cache:
@@ -123,10 +139,10 @@ class LocalizationManager:
             with open(locale_file, 'r', encoding='utf-8') as f:
                 locale_data = json.load(f)
             
-            # 缓存数据
+            # Cache data / 缓存数据
             self._localization_cache[locale_code] = locale_data
             
-            # 记录性能
+            # Record performance / 记录性能
             load_time = (time.perf_counter() - start_time) * 1000  # ms
             self._performance_metrics['load_times'].append(load_time)
             self._performance_metrics['cache_misses'] += 1
@@ -140,23 +156,28 @@ class LocalizationManager:
     
     def get_text(self, key: str, locale: Optional[str] = None, **kwargs) -> str:
         """
+        Get localized text
         获取本地化文本
         
         Args:
+            key: Text key, supports dot-separated hierarchy, e.g. 'commands.test'
             key: 文本键，支持点分层级，如 'commands.test'
+            locale: Target language code, defaults to current language
             locale: 目标语言代码，默认使用当前语言
+            **kwargs: Text interpolation parameters
             **kwargs: 文本插值参数
             
         Returns:
+            Localized text string
             本地化文本字符串
         """
         target_locale = locale or self.current_locale
         locale_data = self._load_locale_data(target_locale)
         
         if not locale_data:
-            return key  # 降级返回键名
+            return key  # Fallback to key name / 降级返回键名
         
-        # 解析点分键
+        # Parse dot-separated keys / 解析点分键
         keys = key.split('.')
         value = locale_data
         
@@ -165,12 +186,12 @@ class LocalizationManager:
                 if isinstance(value, dict) and k in value:
                     value = value[k]
                 else:
-                    # 键不存在，尝试英文降级
+                    # Key doesn't exist, try English fallback / 键不存在，尝试英文降级
                     if target_locale != 'en_US':
                         return self.get_text(key, 'en_US', **kwargs)
                     return key
             
-            # 如果是字符串，进行插值处理
+            # If it's a string, perform interpolation / 如果是字符串，进行插值处理
             if isinstance(value, str) and kwargs:
                 try:
                     return value.format(**kwargs)

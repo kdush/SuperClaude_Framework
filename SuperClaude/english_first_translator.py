@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+SuperClaude V4 English-First Professional Translation Tool
 SuperClaude V4 英文优先专业翻译工具
 
+Generates professional translations for all other languages based on high-quality English reference translations
 基于高质量英文参考翻译，生成所有其他语言的专业翻译
+Follows international software development standards and best practices
 遵循国际软件开发标准和最佳实践
 """
 
@@ -20,14 +23,14 @@ from SuperClaude.english_reference_translations import get_english_reference, ge
 
 
 def translate_from_english_to_all_languages():
-    """基于英文参考翻译生成所有语言的专业翻译"""
+    """Generate professional translations for all languages based on English reference / 基于英文参考翻译生成所有语言的专业翻译"""
     
-    print("🇺🇸 使用英文作为翻译源头，生成所有语言的专业翻译...")
+    print("🇺🇸 Using English as translation source, generating professional translations for all languages... / 使用英文作为翻译源头，生成所有语言的专业翻译...")
     
-    # 获取英文参考翻译
+    # Get English reference translations / 获取英文参考翻译
     english_reference = get_english_commands()
     
-    # 高质量专业翻译 - 从英文翻译到各语言
+    # High-quality professional translations - from English to all languages / 高质量专业翻译 - 从英文翻译到各语言
     translations = {
         'zh_CN': {
             "analyze": "执行质量、安全、性能和架构领域的全面代码分析。",

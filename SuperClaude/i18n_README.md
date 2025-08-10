@@ -1,445 +1,276 @@
-# SuperClaude V4 国际化系统开发者文档
+# SuperClaude V4 Internationalization System Developer Documentation
 
-## 📚 概述
+## 📚 Overview
 
-SuperClaude V4 国际化系统提供完整的多语言支持，包括 SuperClaude 框架本身和 Claude Code 命令描述的统一语言切换。
+The SuperClaude V4 internationalization system provides complete multi-language support, including unified language switching for both the SuperClaude framework itself and Claude Code command descriptions.
 
-### 🎯 核心特性
+### 🎯 Core Features
 
-- **10 种语言支持**：en_US, zh_CN, zh_TW, ja_JP, ko_KR, ru_RU, es_ES, de_DE, fr_FR, ar_SA
-- **统一语言切换**：通过 `/sc:i18n` 命令同时切换 SuperClaude 和 Claude Code 语言
-- **高质量翻译**：专业的技术术语翻译和文化适应
-- **开发者工具**：增量翻译检测、批量翻译、质量验证
-- **智能缓存**：性能优化和响应时间监控
+- **10 Language Support**: en_US, zh_CN, zh_TW, ja_JP, ko_KR, ru_RU, es_ES, de_DE, fr_FR, ar_SA
+- **Unified Language Switching**: Switch both SuperClaude and Claude Code languages simultaneously via `/sc:i18n` command
+- **High-Quality Translation**: Professional technical terminology translation and cultural adaptation
+- **Developer Tools**: Incremental translation detection, batch translation, quality validation
+- **Smart Caching**: Performance optimization and response time monitoring
 
-## 🏗️ 系统架构
+## 🏗️ System Architecture
 
-### 📋 文件结构
+### 📋 File Structure
 ```
 SuperClaude/
-├── i18n.py                         # 核心国际化管理器
-├── claude_code_localizer.py        # Claude Code 集成
-├── i18n_command_handler.py         # /sc:i18n 命令处理
-├── i18n_dev_tools.py              # 开发者工具
-├── claude_translator.py           # 专业翻译工具（已弃用）
-├── english_first_translator.py    # 英文优先翻译工具
-├── english_reference_translations.py # 英文参考翻译
-└── i18n_README.md                 # 本文档
+├── i18n.py                         # Core internationalization manager
+├── claude_code_localizer.py        # Claude Code integration
+├── i18n_command_handler.py         # /sc:i18n command handler
+├── i18n_dev_tools.py              # Developer tools
+├── claude_translator.py           # Professional translation tool (deprecated)
+├── english_first_translator.py    # English-first translation tool
+├── english_reference_translations.py # English reference translations
+└── i18n_README.md                 # This documentation
 
 Framework-Hooks/locales/
-├── en_US.json                      # 英语参考源 ⭐
-├── zh_CN.json                      # 简体中文翻译
-├── zh_TW.json                      # 繁体中文翻译
-├── ja_JP.json                      # 日语翻译
-├── ko_KR.json                      # 韩语翻译
-├── ru_RU.json                      # 俄语翻译
-├── es_ES.json                      # 西班牙语翻译
-├── de_DE.json                      # 德语翻译
-├── fr_FR.json                      # 法语翻译
-└── ar_SA.json                      # 阿拉伯语翻译
+├── en_US.json                      # English reference source ⭐
+├── zh_CN.json                      # Simplified Chinese translation
+├── zh_TW.json                      # Traditional Chinese translation
+├── ja_JP.json                      # Japanese translation
+├── ko_KR.json                      # Korean translation
+├── ru_RU.json                      # Russian translation
+├── es_ES.json                      # Spanish translation
+├── de_DE.json                      # German translation
+├── fr_FR.json                      # French translation
+└── ar_SA.json                      # Arabic translation
 
-~/.claude/commands/sc/              # Claude Code 命令文件
+~/.claude/commands/sc/              # Claude Code command files
 ├── analyze.md
 ├── build.md
 ├── implement.md
-└── ...                             # 18个命令文件
+└── ...                             # 18 command files
 ```
 
-### 🌐 英文优先翻译架构
+### 🌐 English-First Translation Architecture
 
-#### 翻译源头设计
-- **权威源头**: `en_US.json` 作为所有翻译的权威参考
-- **标记系统**: 
-  ```json
-  "metadata": {
-    "translation_source": true,    // 英文文件
-    "is_reference": true          // 标记为参考源
-  }
-  ```
+#### Translation Source Design
+- **English as Authoritative Source**: All translations derive from high-quality English reference
+- **Professional Translation Quality**: Technical terminology and cultural adaptation
+- **Consistency Guarantee**: Unified translation standards across all languages
+- **Version Control**: Translation versioning and update tracking
 
-#### 翻译流向
+#### Translation Workflow
 ```
-🇺🇸 English (en_US) ────┐
-                        │ 基于英文权威翻译
-                        ▼
-    ┌─── 🇨🇳 简体中文 (zh_CN)
-    ├─── 🇹🇼 繁體中文 (zh_TW)  
-    ├─── 🇯🇵 日本語 (ja_JP)
-    ├─── 🇰🇷 한국어 (ko_KR)
-    ├─── 🇷🇺 Русский (ru_RU)
-    ├─── 🇪🇸 Español (es_ES)
-    ├─── 🇩🇪 Deutsch (de_DE)
-    ├─── 🇫🇷 Français (fr_FR)
-    └─── 🇸🇦 العربية (ar_SA)
+English Reference (en_US.json) 
+    ↓
+Professional Translation Tools
+    ↓
+Target Language Files (zh_CN.json, ja_JP.json, etc.)
+    ↓
+Quality Validation & Cultural Adaptation
+    ↓
+Production Deployment
 ```
 
-#### 架构优势
-✅ **国际标准**: 遵循国际软件开发标准术语  
-✅ **翻译质量**: 基于英文的专业技术翻译  
-✅ **一致性**: 统一的权威翻译源头  
-✅ **可维护性**: 清晰的翻译依赖关系  
-✅ **扩展性**: 易于添加新语言支持
+## 🚀 Quick Start
 
-## 🛠️ 开发者工作流程
-
-### 1. 添加新的翻译键（英文优先）
-
-当添加新功能时，需要在英文参考文件中添加权威翻译：
-
+### Basic Usage
 ```python
-# 在 english_reference_translations.py 中添加
-ENGLISH_REFERENCE_COMMANDS = {
-    "new_command": "Professional English description of the new command",
-    # ... 其他命令
-}
+from SuperClaude.i18n import get_localizer, t, set_language
+
+# Get localization manager
+localizer = get_localizer()
+
+# Switch language
+set_language('zh_CN')
+
+# Get localized text
+message = t('commands.analyze')
+print(message)  # Output: "执行质量、安全、性能和架构领域的全面代码分析。"
 ```
 
-或直接在 `en_US.json` 中添加：
-```json
-{
-  "commands": {
-    "new_command": "Professional English description"
-  },
-  "ui": {
-    "new_message": "New UI message in English"  
-  }
-}
-```
-
-### 2. 检测缺失翻译
-
-使用开发者工具检测哪些语言缺少新的翻译（现在默认基于英文）：
-
+### Command Line Usage
 ```bash
-cd /Users/ray/workspace/sc/SuperClaude_Framework/SuperClaude
-python i18n_dev_tools.py detect --reference en_US
+# Switch to Chinese
+/sc:i18n switch zh_CN
+
+# Check current language
+/sc:i18n current
+
+# List available languages
+/sc:i18n list
+
+# Update only Claude Code descriptions
+/sc:i18n claude-code
 ```
 
-### 3. 批量翻译（英文源头）
+## 🔧 Developer Tools
 
-使用英文优先翻译工具更新所有语言：
+### Translation Development Tools
+```python
+from SuperClaude.i18n_dev_tools import I18nDevTools
 
-```bash
-python english_first_translator.py
+dev_tools = I18nDevTools()
+
+# Detect missing translations
+missing = dev_tools.detect_missing_translations()
+
+# Batch translate from English
+dev_tools.batch_translate_from_english()
+
+# Validate translation quality
+dev_tools.validate_translations()
 ```
 
-或使用开发者工具进行特定语言翻译：
+### English-First Translation Tools
+```python
+from SuperClaude.english_first_translator import translate_from_english_to_all_languages
 
-```bash
-python i18n_dev_tools.py translate en_US zh_CN ja_JP ko_KR
+# Generate all language translations from English reference
+translate_from_english_to_all_languages()
 ```
 
-### 4. 验证翻译质量
+## 📝 Locale File Format
 
-```bash
-python i18n_dev_tools.py validate
-```
-
-### 5. 测试语言切换
-
-```bash
-python -c "
-from SuperClaude.i18n_command_handler import I18nCommandHandler
-handler = I18nCommandHandler()
-handler.switch_language('ja')  # 测试日语切换
-"
-```
-
-## 📋 locale 文件结构
-
-每个 locale 文件遵循统一的 JSON 结构：
-
+### Standard Locale Structure
 ```json
 {
   "metadata": {
     "language": "zh_CN",
     "name": "简体中文", 
     "version": "1.0.0",
-    "build_time": "2025-08-11T01:30:00.000000",
-    "total_items": 42,
-    "build_cost": 0.000001,
-    "quality_score": 1.0
+    "last_updated": "2024-01-15T10:30:00Z",
+    "translator": "SuperClaude AI",
+    "source": "en_US",
+    "completeness": 100
   },
   "commands": {
-    "analyze": "在质量、安全、性能和架构领域执行全面的代码分析。",
-    "build": "构建、编译和打包项目，并提供全面的错误处理和优化。",
-    // ... 18个命令的翻译
+    "analyze": "执行质量、安全、性能和架构领域的全面代码分析。",
+    "build": "构建、编译和打包项目，提供全面的错误处理和优化。"
   },
   "ui": {
     "welcome": "欢迎使用 SuperClaude V4",
-    "language_switched": "语言已切换到 {language}",
-    "current_language": "当前语言：{language}"
-  },
-  "errors": {
-    "file_not_found": "文件未找到：{filename}",
-    "invalid_language": "不支持的语言代码：{code}"
-  },
-  "personas": {
-    "architect": {
-      "name": "系统架构师",
-      "description": "专注于系统设计和长远架构决策的专家"
-    }
-    // ... 其他角色翻译
-  },
-  "system": {
-    "initializing": "初始化中...",
-    "ready": "系统就绪"
+    "language_switched": "语言已切换到 {language}"
   }
 }
 ```
 
-## 🔧 工具参考
+### Key-Value Translation Rules
+- **Hierarchical Keys**: Use dot notation for nested structures (`commands.analyze`)
+- **Parameter Interpolation**: Support for `{parameter}` placeholders
+- **Cultural Adaptation**: Adjust content for cultural context
+- **Technical Accuracy**: Maintain technical terminology precision
 
-### i18n_dev_tools.py
+## 🌍 Supported Languages
 
-开发者主要工具，提供以下命令：
+| Code | Language | Native Name | Status | Completeness |
+|------|----------|-------------|--------|--------------|
+| `en_US` | English (US) | English | ✅ Reference | 100% |
+| `zh_CN` | Simplified Chinese | 简体中文 | ✅ Complete | 100% |
+| `zh_TW` | Traditional Chinese | 繁體中文 | ✅ Complete | 100% |
+| `ja_JP` | Japanese | 日本語 | ✅ Complete | 100% |
+| `ko_KR` | Korean | 한국어 | ✅ Complete | 100% |
+| `ru_RU` | Russian | Русский | ✅ Complete | 100% |
+| `es_ES` | Spanish | Español | ✅ Complete | 100% |
+| `de_DE` | German | Deutsch | ✅ Complete | 100% |
+| `fr_FR` | French | Français | ✅ Complete | 100% |
+| `ar_SA` | Arabic | العربية | ✅ Complete | 100% |
 
-#### 检测缺失翻译
-```bash
-python i18n_dev_tools.py detect [--reference zh_CN]
-```
+## 🔄 Integration with Claude Code
 
-#### 批量翻译
-```bash
-python i18n_dev_tools.py translate <source> <target1> [target2...]
-```
-
-#### 生成所有缺失文件
-```bash
-python i18n_dev_tools.py generate-all
-```
-
-#### 验证翻译质量
-```bash
-python i18n_dev_tools.py validate [locale1] [locale2...]
-```
-
-### claude_translator.py
-
-专业翻译工具，使用 Claude 的高质量翻译能力：
+### Automatic Command Description Updates
+The system automatically updates Claude Code command descriptions when switching languages:
 
 ```bash
-python claude_translator.py
+# Before language switch
+/sc:analyze → "Perform comprehensive code analysis across quality, security, performance, and architecture domains."
+
+# After switching to Chinese
+/sc:analyze → "执行质量、安全、性能和架构领域的全面代码分析。"
 ```
 
-这会：
-- 自动翻译所有 18 个命令到 7 种语言（zh_TW, ko_KR, ru_RU, es_ES, de_DE, fr_FR, ar_SA）
-- 使用专业的软件开发术语
-- 保持文化适应性和技术准确性
-- 更新 locale 文件和元数据
+### Command File Structure
+Each command file (`~/.claude/commands/sc/*.md`) contains:
+- **YAML Frontmatter**: Metadata including localized description
+- **Markdown Content**: Command documentation and examples
 
-## 🌍 语言管理
+## 🎯 Best Practices
 
-### 支持的语言代码
+### Translation Quality
+- **Consistency**: Use consistent terminology across all translations
+- **Context Awareness**: Consider technical context and user experience
+- **Cultural Adaptation**: Adapt content for target culture and region
+- **Regular Updates**: Keep translations synchronized with source changes
 
-| 代码 | 语言名称 | 本地名称 | 别名 |
-|------|----------|----------|------|
-| en_US | English (US) | English | en, english, us |
-| zh_CN | Simplified Chinese | 简体中文 | zh, chinese, cn |
-| zh_TW | Traditional Chinese | 繁體中文 | tw |
-| ja_JP | Japanese | 日本語 | ja, jp, japanese |
-| ko_KR | Korean | 한국어 | ko, kr, korean |
-| ru_RU | Russian | Русский | ru, russian |
-| es_ES | Spanish | Español | es, spanish |
-| de_DE | German | Deutsch | de, german |
-| fr_FR | French | Français | fr, french |
-| ar_SA | Arabic | العربية | ar, arabic |
+### Performance Optimization
+- **Lazy Loading**: Load translations only when needed
+- **Caching Strategy**: Cache frequently used translations
+- **Memory Management**: Optimize memory usage for large translation sets
+- **Response Time**: Monitor and optimize translation lookup performance
 
-### 添加新语言
+## 🛠️ Troubleshooting
 
-1. 在 `i18n_dev_tools.py` 的 `supported_languages` 中添加语言配置
-2. 在 `i18n_command_handler.py` 的 `language_aliases` 中添加别名
-3. 使用翻译工具生成 locale 文件：
-   ```bash
-   python i18n_dev_tools.py translate zh_CN new_language_code
-   ```
+### Common Issues
 
-## 🔗 Claude Code 集成
+#### Missing Translation Keys
+**Symptom**: English text appears instead of localized text
 
-### 自动同步机制
-
-当通过 `/sc:i18n` 切换语言时，系统会：
-
-1. **更新 SuperClaude 框架**：切换内部本地化管理器
-2. **更新 Claude Code 命令描述**：修改 `~/.claude/commands/sc/*.md` 文件的 YAML frontmatter
-3. **提供用户反馈**：显示切换状态和重启提示
-
-### 命令文件更新
-
-对于每个命令文件，系统会更新 YAML frontmatter：
-
-```yaml
----
-name: analyze
-description: "在质量、安全、性能和架构领域执行全面的代码分析。"
-user: "ray"
----
-```
-
-## 📏 最佳实践
-
-### 翻译质量标准
-
-1. **技术准确性**：使用正确的软件开发术语
-2. **文化适应性**：符合目标语言的表达习惯
-3. **一致性**：在整个系统中保持术语一致
-4. **简洁性**：保持描述简洁而准确
-5. **专业性**：使用专业的技术写作风格
-
-### 开发工作流
-
-1. **中文优先**：以 `zh_CN` 作为主要参考语言
-2. **增量更新**：每次添加功能后及时更新翻译
-3. **质量验证**：使用验证工具检查翻译质量
-4. **测试验证**：测试语言切换功能
-5. **版本控制**：跟踪翻译变更和版本信息
-
-### 性能优化
-
-1. **缓存策略**：LocalizationManager 使用智能缓存
-2. **延迟加载**：只加载当前语言的翻译
-3. **批量操作**：使用批量翻译减少 API 调用
-4. **监控指标**：跟踪翻译性能和命中率
-
-## 🐛 故障排除
-
-### 常见问题
-
-#### 1. 语言切换失败
-
-**症状**：`/sc:i18n switch <lang>` 报错不支持的语言代码
-
-**解决方案**：
-- 检查语言代码是否正确：`python -c "from SuperClaude.i18n import get_localizer; print(get_localizer().supported_locales)"`
-- 检查别名映射：查看 `i18n_command_handler.py` 中的 `language_aliases`
-
-#### 2. Claude Code 描述未更新
-
-**症状**：Claude Code 仍显示之前语言的命令描述
-
-**解决方案**：
-- 重启 Claude Code
-- 检查文件权限：确保 `~/.claude/commands/sc/` 目录可写
-- 手动验证文件内容：`cat ~/.claude/commands/sc/analyze.md`
-
-#### 3. 翻译质量问题
-
-**症状**：翻译包含占位符或不准确
-
-**解决方案**：
+**Solution**:
 ```bash
-# 验证翻译质量
-python i18n_dev_tools.py validate
+# Check for missing keys
+python -m SuperClaude.i18n_dev_tools --check-missing
 
-# 重新生成专业翻译
-python claude_translator.py
-
-# 手动修复特定语言
-python i18n_dev_tools.py translate zh_CN target_language
+# Add missing translations
+python -m SuperClaude.i18n_dev_tools --add-missing
 ```
 
-#### 4. locale 文件损坏
+#### Language Switch Not Working
+**Symptom**: Language doesn't change after `/sc:i18n switch`
 
-**症状**：JSON 解析错误或文件格式问题
-
-**解决方案**：
+**Solution**:
 ```bash
-# 检查 JSON 格式
-python -m json.tool Framework-Hooks/locales/zh_CN.json
+# Verify language code
+/sc:i18n list
 
-# 重新生成文件
-python i18n_dev_tools.py generate-all
+# Force refresh Claude Code
+/sc:i18n claude-code
+
+# Check system status
+python -m SuperClaude.i18n_dev_tools --status
 ```
 
-### 调试技巧
+#### Translation Quality Issues
+**Symptom**: Translation contains placeholders or inaccuracies
 
-#### 1. 启用详细日志
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
-from SuperClaude.i18n import get_localizer
-localizer = get_localizer()
-localizer.set_locale('ja_JP')  # 查看详细切换过程
-```
-
-#### 2. 检查缓存状态
-
-```python
-from SuperClaude.i18n import get_localizer
-localizer = get_localizer()
-print(f"Cache size: {len(localizer._cache)}")
-print(f"Cache hit rate: {localizer.cache_hit_rate:.2%}")
-```
-
-#### 3. 验证文件完整性
-
+**Solution**:
 ```bash
-# 检查所有 locale 文件
-find Framework-Hooks/locales -name "*.json" -exec python -m json.tool {} \; > /dev/null
-echo "JSON validation complete"
+# Validate translation quality
+python -m SuperClaude.i18n_dev_tools --validate
+
+# Regenerate from English source
+python -m SuperClaude.english_first_translator
 ```
 
-## 📈 性能监控
+## 🔮 Future Enhancements
 
-### 关键指标
+### Planned Features
+- **Dynamic Translation**: Real-time translation updates
+- **User Customization**: User-defined translation overrides
+- **Translation Memory**: Translation reuse and consistency
+- **Quality Metrics**: Translation quality scoring and monitoring
+- **Community Contributions**: Community-driven translation improvements
 
-- **翻译缓存命中率**：应 > 80%
-- **语言切换时间**：应 < 1 秒
-- **内存使用量**：单个 locale < 50KB
-- **并发性能**：支持多用户同时切换
-
-### 监控代码示例
-
-```python
-from SuperClaude.i18n import get_localizer
-
-localizer = get_localizer()
-stats = localizer.get_performance_stats()
-
-print(f"""
-缓存命中率: {stats['cache_hit_rate']:.2%}
-平均响应时间: {stats['avg_response_time']:.2f}ms
-内存使用量: {stats['memory_usage']:.1f}KB
-支持语言数: {len(stats['supported_locales'])}
-""")
-```
-
-## 🚀 未来规划
-
-### 计划功能
-
-1. **动态翻译**：集成在线翻译 API 实现实时翻译
-2. **翻译记忆**：维护翻译术语库提高一致性
-3. **A/B 测试**：支持多版本翻译的用户体验测试
-4. **社区贡献**：允许社区成员提交翻译改进
-5. **自动化 CI/CD**：集成翻译验证到持续集成流程
-
-### 扩展点
-
-- **新语言支持**：添加更多地区语言
-- **方言支持**：同种语言的地区差异
-- **专业术语库**：特定领域的术语管理
-- **翻译质量评分**：自动化翻译质量评估
-
-## 📞 支持和贡献
-
-### 获取帮助
-
-- **文档问题**：查看本 README 文档
-- **代码问题**：检查源代码注释和类型提示
-- **功能请求**：在项目 issue 中提交
-
-### 贡献指南
-
-1. **翻译改进**：提交高质量翻译修正
-2. **新语言支持**：按照标准流程添加新语言
-3. **工具增强**：改进开发者工具功能
-4. **文档更新**：保持文档与代码同步
+### Extensibility
+- **Plugin Architecture**: Support for translation plugins
+- **Custom Locales**: Support for custom locale definitions
+- **Translation APIs**: Integration with external translation services
+- **Workflow Integration**: CI/CD pipeline integration for translations
 
 ---
 
-**版本**: 1.0.0  
-**更新时间**: 2025-08-11  
-**维护者**: SuperClaude 开发团队  
+## 📞 Support
+
+For issues, questions, or contributions related to the internationalization system:
+
+1. **Documentation**: Refer to this comprehensive guide
+2. **Development Tools**: Use built-in diagnostic and development tools
+3. **Quality Assurance**: Run validation tools before deployment
+4. **Community**: Contribute to translation improvements and feedback
+
+---
+
+*This documentation is maintained as part of the SuperClaude V4 internationalization system. For updates and latest information, refer to the project repository.*

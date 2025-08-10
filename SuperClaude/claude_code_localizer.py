@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
+Claude Code Command Description Localization Tool
 Claude Code 命令描述本地化工具
 
+Solves the problem of Claude Code displaying English command descriptions
 解决 Claude Code 显示英文命令描述的问题
+Implements localized display by directly updating YAML frontmatter in .md files
 通过直接更新 .md 文件的 YAML frontmatter 实现本地化显示
 """
 
@@ -21,15 +24,15 @@ from SuperClaude.i18n import get_localizer
 
 
 class ClaudeCodeLocalizer:
-    """Claude Code 命令描述本地化器"""
+    """Claude Code Command Description Localizer / Claude Code 命令描述本地化器"""
     
     def __init__(self):
         self.localizer = get_localizer()
         
-        # Claude Code 命令文件路径
+        # Claude Code command files path / Claude Code 命令文件路径
         self.commands_dir = Path("/Users/ray/.claude/commands/sc")
         
-        # 支持的命令列表
+        # Supported commands list / 支持的命令列表
         self.commands = [
             'analyze', 'build', 'cleanup', 'design', 'document',
             'estimate', 'explain', 'git', 'i18n', 'implement', 
@@ -37,12 +40,13 @@ class ClaudeCodeLocalizer:
             'test', 'troubleshoot', 'workflow'
         ]
         
-        # 备份目录
+        # Backup directory / 备份目录
         self.backup_dir = Path("/Users/ray/workspace/sc/SuperClaude_Framework/backups/claude_commands")
         self.backup_dir.mkdir(parents=True, exist_ok=True)
     
     def parse_markdown_file(self, file_path: Path) -> Tuple[Dict, str]:
         """
+        Parse YAML frontmatter and content of Markdown file
         解析 Markdown 文件的 YAML frontmatter 和内容
         
         Returns:
