@@ -30,7 +30,8 @@ class ClaudeCodeLocalizer:
         self.localizer = get_localizer()
         
         # Claude Code command files path / Claude Code 命令文件路径
-        self.commands_dir = Path("/Users/ray/.claude/commands/sc")
+        # Use dynamic path resolution for cross-platform compatibility / 使用动态路径解析以实现跨平台兼容性
+        self.commands_dir = Path.home() / ".claude" / "commands" / "sc"
         
         # Supported commands list / 支持的命令列表
         self.commands = [
@@ -41,7 +42,9 @@ class ClaudeCodeLocalizer:
         ]
         
         # Backup directory / 备份目录
-        self.backup_dir = Path("/Users/ray/workspace/sc/SuperClaude_Framework/backups/claude_commands")
+        # Use relative path from current framework root / 使用当前框架根目录的相对路径
+        framework_root = Path(__file__).parent.parent
+        self.backup_dir = framework_root / "backups" / "claude_commands"
         self.backup_dir.mkdir(parents=True, exist_ok=True)
     
     def parse_markdown_file(self, file_path: Path) -> Tuple[Dict, str]:
