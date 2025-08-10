@@ -14,72 +14,119 @@ SuperClaude V4 国际化系统提供完整的多语言支持，包括 SuperClaud
 
 ## 🏗️ 系统架构
 
+### 📋 文件结构
 ```
 SuperClaude/
-├── i18n.py                    # 核心国际化管理器
-├── claude_code_localizer.py   # Claude Code 集成
-├── i18n_command_handler.py    # /sc:i18n 命令处理
-├── i18n_dev_tools.py         # 开发者工具
-├── claude_translator.py      # 专业翻译工具
-└── i18n_README.md            # 本文档
+├── i18n.py                         # 核心国际化管理器
+├── claude_code_localizer.py        # Claude Code 集成
+├── i18n_command_handler.py         # /sc:i18n 命令处理
+├── i18n_dev_tools.py              # 开发者工具
+├── claude_translator.py           # 专业翻译工具（已弃用）
+├── english_first_translator.py    # 英文优先翻译工具
+├── english_reference_translations.py # 英文参考翻译
+└── i18n_README.md                 # 本文档
 
 Framework-Hooks/locales/
-├── en_US.json                 # 英语翻译
-├── zh_CN.json                 # 简体中文翻译
-├── zh_TW.json                 # 繁体中文翻译
-├── ja_JP.json                 # 日语翻译
-├── ko_KR.json                 # 韩语翻译
-├── ru_RU.json                 # 俄语翻译
-├── es_ES.json                 # 西班牙语翻译
-├── de_DE.json                 # 德语翻译
-├── fr_FR.json                 # 法语翻译
-└── ar_SA.json                 # 阿拉伯语翻译
+├── en_US.json                      # 英语参考源 ⭐
+├── zh_CN.json                      # 简体中文翻译
+├── zh_TW.json                      # 繁体中文翻译
+├── ja_JP.json                      # 日语翻译
+├── ko_KR.json                      # 韩语翻译
+├── ru_RU.json                      # 俄语翻译
+├── es_ES.json                      # 西班牙语翻译
+├── de_DE.json                      # 德语翻译
+├── fr_FR.json                      # 法语翻译
+└── ar_SA.json                      # 阿拉伯语翻译
 
-~/.claude/commands/sc/         # Claude Code 命令文件
+~/.claude/commands/sc/              # Claude Code 命令文件
 ├── analyze.md
 ├── build.md
 ├── implement.md
-└── ...                        # 18个命令文件
+└── ...                             # 18个命令文件
 ```
+
+### 🌐 英文优先翻译架构
+
+#### 翻译源头设计
+- **权威源头**: `en_US.json` 作为所有翻译的权威参考
+- **标记系统**: 
+  ```json
+  "metadata": {
+    "translation_source": true,    // 英文文件
+    "is_reference": true          // 标记为参考源
+  }
+  ```
+
+#### 翻译流向
+```
+🇺🇸 English (en_US) ────┐
+                        │ 基于英文权威翻译
+                        ▼
+    ┌─── 🇨🇳 简体中文 (zh_CN)
+    ├─── 🇹🇼 繁體中文 (zh_TW)  
+    ├─── 🇯🇵 日本語 (ja_JP)
+    ├─── 🇰🇷 한국어 (ko_KR)
+    ├─── 🇷🇺 Русский (ru_RU)
+    ├─── 🇪🇸 Español (es_ES)
+    ├─── 🇩🇪 Deutsch (de_DE)
+    ├─── 🇫🇷 Français (fr_FR)
+    └─── 🇸🇦 العربية (ar_SA)
+```
+
+#### 架构优势
+✅ **国际标准**: 遵循国际软件开发标准术语  
+✅ **翻译质量**: 基于英文的专业技术翻译  
+✅ **一致性**: 统一的权威翻译源头  
+✅ **可维护性**: 清晰的翻译依赖关系  
+✅ **扩展性**: 易于添加新语言支持
 
 ## 🛠️ 开发者工作流程
 
-### 1. 添加新的翻译键
+### 1. 添加新的翻译键（英文优先）
 
-当添加新功能时，需要在 `zh_CN.json` 中添加新的翻译键：
+当添加新功能时，需要在英文参考文件中添加权威翻译：
 
+```python
+# 在 english_reference_translations.py 中添加
+ENGLISH_REFERENCE_COMMANDS = {
+    "new_command": "Professional English description of the new command",
+    # ... 其他命令
+}
+```
+
+或直接在 `en_US.json` 中添加：
 ```json
 {
   "commands": {
-    "new_command": "新命令的中文描述"
+    "new_command": "Professional English description"
   },
   "ui": {
-    "new_message": "新界面消息"
+    "new_message": "New UI message in English"  
   }
 }
 ```
 
 ### 2. 检测缺失翻译
 
-使用开发者工具检测哪些语言缺少新的翻译：
+使用开发者工具检测哪些语言缺少新的翻译（现在默认基于英文）：
 
 ```bash
 cd /Users/ray/workspace/sc/SuperClaude_Framework/SuperClaude
-python i18n_dev_tools.py detect --reference zh_CN
+python i18n_dev_tools.py detect --reference en_US
 ```
 
-### 3. 批量翻译
+### 3. 批量翻译（英文源头）
 
-使用 Claude 的专业翻译能力更新所有语言：
+使用英文优先翻译工具更新所有语言：
 
 ```bash
-python claude_translator.py
+python english_first_translator.py
 ```
 
 或使用开发者工具进行特定语言翻译：
 
 ```bash
-python i18n_dev_tools.py translate zh_CN ko_KR ja_JP
+python i18n_dev_tools.py translate en_US zh_CN ja_JP ko_KR
 ```
 
 ### 4. 验证翻译质量
