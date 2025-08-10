@@ -3,30 +3,32 @@
     "language": "en_US",
     "name": "English (US)",
     "version": "1.0.0",
-    "build_time": "2025-08-08T16:18:14.354105",
-    "total_items": 118,
+    "total_items": 42,
     "build_cost": 1e-06,
-    "quality_score": 0.991
+    "quality_score": 1.0,
+    "is_reference": true,
+    "translation_source": true,
+    "build_time": "2025-08-11T01:33:57.724840"
   },
   "commands": {
-    "document": "Create focused documentation for specific components or features.",
-    "spawn": "Break complex tasks into coordinated subtasks with efficient execution.",
-    "estimate": "Provide development estimates for tasks, features, or projects with complexity analysis.",
-    "i18n": "Multi-language system management with intelligent language switching, persona localization, translation validation, and cultural adaptation across 10 languages.",
-    "implement": "Feature and code implementation with intelligent persona activation and comprehensive development support.",
-    "troubleshoot": "Systematically diagnose and resolve issues in code, builds, deployments, or system behavior.",
-    "improve": "Apply systematic improvements to code quality, performance, maintainability, and best practices.",
-    "explain": "Provide clear, comprehensive explanations of code functionality, concepts, or system behavior.",
     "analyze": "Execute comprehensive code analysis across quality, security, performance, and architecture domains.",
-    "workflow": "Analyze Product Requirements Documents (PRDs) and feature specifications to generate comprehensive, step-by-step implementation workflows with expert guidance, dependency mapping, and automated task orchestration.",
-    "load": "Load and analyze project context, configurations, dependencies, and environment settings.",
-    "index": "Create and maintain comprehensive project documentation, indexes, and knowledge base.",
     "build": "Build, compile, and package projects with comprehensive error handling and optimization.",
-    "git": "Execute Git operations with intelligent commit messages, branch management, and workflow optimization.",
-    "task": "Execute complex tasks with intelligent workflow management, cross-session persistence, hierarchical task organization, and advanced orchestration capabilities.",
-    "design": "Design system architecture, APIs, component interfaces, and technical specifications.",
     "cleanup": "Systematically clean up code, remove dead code, optimize imports, and improve project structure.",
-    "test": "Execute tests, generate comprehensive test reports, and maintain test coverage standards."
+    "design": "Design system architecture, APIs, component interfaces, and technical specifications.",
+    "document": "Generate precise, focused documentation for specific components, functions, or features.",
+    "estimate": "Generate accurate development estimates for tasks, features, or projects based on complexity analysis.",
+    "explain": "Provide clear, comprehensive explanations of code functionality, concepts, or system behavior.",
+    "git": "Execute Git operations with intelligent commit messages, branch management, and workflow optimization.",
+    "i18n": "Manage multi-language system with intelligent language switching, persona localization, translation validation, and cultural adaptation across 10 languages.",
+    "implement": "Implement features, components, and code functionality with intelligent expert activation and comprehensive development support.",
+    "improve": "Apply systematic improvements to code quality, performance, maintainability, and best practices.",
+    "index": "Create and maintain comprehensive project documentation, indexes, and knowledge base.",
+    "load": "Load and analyze project context, configurations, dependencies, and environment settings.",
+    "spawn": "Break down complex requests into manageable subtasks and coordinate their execution.",
+    "task": "Execute complex tasks with intelligent workflow management, cross-session persistence, hierarchical task organization, and advanced orchestration capabilities.",
+    "test": "Execute tests, generate comprehensive test reports, and maintain test coverage standards.",
+    "troubleshoot": "Systematically diagnose and resolve issues in code, builds, deployments, or system behavior.",
+    "workflow": "Analyze Product Requirements Documents (PRDs) and feature specifications to generate comprehensive, step-by-step implementation workflows with expert guidance, dependency mapping, and automated task orchestration."
   },
   "ui": {
     "welcome": "Welcome to SuperClaude V4",
@@ -42,11 +44,11 @@
   "personas": {
     "architect": {
       "name": "System Architect",
-      "description": "Expert focused on system design and long-term architecture decisions"
+      "description": "Expert focused on system design and long-term architectural decisions"
     },
     "frontend": {
-      "name": "Frontend Expert",
-      "description": "User experience specialist and accessibility advocate"
+      "name": "Frontend Specialist",
+      "description": "User experience expert and accessibility advocate"
     },
     "backend": {
       "name": "Backend Engineer",
